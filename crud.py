@@ -1,5 +1,6 @@
 import bcrypt
 from sqlalchemy.orm import Session
+from leetcode import get_data_from_leetcode
 import models, schemas
 from sqlalchemy import desc
 
@@ -26,7 +27,8 @@ def update_user(db: Session, username: str, new_rating: int, new_top_percentage:
     user.rating = new_rating
     user.top_percentage = new_top_percentage
     db.add(user)
-    return {'ok': True}
+    db.commit()
+    return True
 
 def get_users(db: Session):
     return db.query(models.User).order_by(desc(models.User.rating)).all()

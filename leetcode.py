@@ -18,7 +18,7 @@ def get_data_from_leetcode(username):
         data = json.loads(r.text)['data']
         return {
             'rating': data['userContestRanking']['rating'],
-            'topPercentage': data['userContestRanking']['topPercentage']
+            'top_percentage': data['userContestRanking']['topPercentage']
         }
     except Exception as e:
         print(str(e))
