@@ -1,6 +1,5 @@
 import bcrypt
 from sqlalchemy.orm import Session
-from leetcode import get_data_from_leetcode
 import models, schemas
 from sqlalchemy import desc
 

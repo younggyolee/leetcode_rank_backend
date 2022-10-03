@@ -21,5 +21,8 @@ def get_data_from_leetcode(username):
             'top_percentage': data['userContestRanking']['topPercentage']
         }
     except Exception as e:
-        print(str(e))
-        raise Exception('error while fetching!')
+        print('error', e)
+        return {
+            'rating': 0,
+            'top_percentage': 0
+        }
