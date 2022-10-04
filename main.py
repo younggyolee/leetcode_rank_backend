@@ -27,6 +27,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get('/')
+def index():
+    return True
+
 @app.post('/user/', response_model=schemas.UserOut)
 def create_user(user_in: schemas.UserIn, db: Session = Depends(get_db)):
     user = get_user(db, user_in.username)
