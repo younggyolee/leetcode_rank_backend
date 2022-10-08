@@ -31,7 +31,7 @@ app.add_middleware(
 def index():
     return True
 
-@app.post('/user/', response_model=schemas.UserOut)
+@app.post('/user', response_model=schemas.UserOut)
 def create_user(user_in: schemas.UserIn, db: Session = Depends(get_db)):
     user = get_user(db, user_in.username)
     if user:
@@ -39,7 +39,7 @@ def create_user(user_in: schemas.UserIn, db: Session = Depends(get_db)):
     user_saved = save_user(db, user_in)
     return user_saved
 
-@app.delete('/user/')
+@app.delete('/user')
 def delete_user(user_in: schemas.UserIn, db: Session = Depends(get_db)):
     user = get_user(db, user_in.username)
     if not user:
@@ -49,7 +49,7 @@ def delete_user(user_in: schemas.UserIn, db: Session = Depends(get_db)):
     remove_user(db, user)
     return {'ok': True}
 
-@app.put('/user/{username}/rating/')
+@app.put('/user/{username}/rating')
 def update_user_rating(username: str, db: Session = Depends(get_db)):
     user = get_user(db, username)
     if not user:
@@ -61,7 +61,7 @@ def update_user_rating(username: str, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail='Internal server error')
 
-@app.post('/rating/')
+@app.post('/rating')
 def update_ratings(db: Session = Depends(get_db)):
     usernames = get_usernames(db)
     for username in usernames:
@@ -72,6 +72,6 @@ def update_ratings(db: Session = Depends(get_db)):
             print(f'error while updating username={username}', e)
     return {'ok': True}
 
-@app.get('/rating/', response_model=List[schemas.UserOut])
+@app.get('/rating', response_model=List[schemas.UserOut])
 def get_rating(db: Session = Depends(get_db)):
     return get_users(db)
