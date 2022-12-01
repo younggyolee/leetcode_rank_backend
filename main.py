@@ -49,18 +49,6 @@ def delete_user(user_in: schemas.UserIn, db: Session = Depends(get_db)):
     remove_user(db, user)
     return {'ok': True}
 
-@app.put('/user/{username}/rating')
-def update_user_rating(username: str, db: Session = Depends(get_db)):
-    user = get_user(db, username)
-    if not user:
-        raise HTTPException(status_code=404, detail='User not found')
-    try:
-        data = get_data_from_leetcode(username)
-        update_user(db, username, data['rating'], data['top_percentage'])
-        return {'ok': True}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail='Internal server error')
-
 @app.post('/rating')
 def update_ratings(db: Session = Depends(get_db)):
     usernames = get_usernames(db)
